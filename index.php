@@ -23,7 +23,7 @@ if(isset($routes[getPage()]["headers"])){
 }
 
 if(@$routes[getPage()]['page']!="index"){
-    requireAuth();
+    //requireAuth();
 }
 
 if(@$routes[getPage()]["container"]==true OR !isset($routes[getPage()]["container"]) ){
