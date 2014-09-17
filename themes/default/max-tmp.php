@@ -1,0 +1,1 @@
+<div class="alert alert-warning" role="alert"><?php echo t('maxSizeTmpPath',array(get('TmpPath'),getHumanSize(get('MaxSizeTmpDir')),"?page=emptytmp") ) ?></div>
