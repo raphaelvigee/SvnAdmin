@@ -79,46 +79,46 @@ class xmlToArrayParser {
 }
 
 function getUrl($page = "", $path = "", $absolute = false, $upVars = array()) {
-	$vars = array();
-	$query_a = array();
-	$query = "";
+    $vars = array();
+    $query_a = array();
+    $query = "";
 
     if($page==="null"){
         $vars['page']=getPage();
     }else{
         $vars['page']=$page;        
     }
-	$vars['repo']=getRepo();
-	$vars['lang']=getLang();
+    $vars['repo']=getRepo();
+    $vars['lang']=getLang();
     if($absolute==true){
         $vars['path']=urlencode($path); 
     }else{
         $vars['path']=urlencode(getPath().$path);   
     }
 
-	$vars['rev']=getRev();
-	if(getRev2()){
-		$vars['rev2']=getRev2();		
-	}
+    $vars['rev']=getRev();
+    if(getRev2()){
+        $vars['rev2']=getRev2();        
+    }
 
-	foreach ($upVars as $k => $value) {
-		if(isset($vars[$k])){
-			unset($vars[$k]);
-		}
-		$vars[$k] = $value;
-	}
+    foreach ($upVars as $k => $value) {
+        if(isset($vars[$k])){
+            unset($vars[$k]);
+        }
+        $vars[$k] = $value;
+    }
 
-	foreach (array_filter($vars) as $key => $value) {
-		$query_a[] =$key."=".$value;
-	}
+    foreach (array_filter($vars) as $key => $value) {
+        $query_a[] =$key."=".$value;
+    }
 
-	$query = implode("&", $query_a);
+    $query = implode("&", $query_a);
 
-	return "?".$query;
+    return "?".$query;
 }
 
 function getPath(){
-	$path = @$_GET['path'];
+    $path = @$_GET['path'];
 
     $chunks = explode('/', $path);
     foreach ($chunks as $i => $chunk) {
@@ -131,29 +131,29 @@ function getPath(){
 
     $path = implode('/', $chunks);
 
-	if($path){
-		return $path."/";
-	}else{
-		return "";
-	}
+    if($path){
+        return $path."/";
+    }else{
+        return "";
+    }
 }
 
 function getGET($remove = array()){
-	$return = array();
-	foreach ($_GET as $key => $value) {
-		if(!in_array($key, $remove)){
-			$return[$key]=$value;
-		}
-	}
-	return $return;
+    $return = array();
+    foreach ($_GET as $key => $value) {
+        if(!in_array($key, $remove)){
+            $return[$key]=$value;
+        }
+    }
+    return $return;
 }
 
 function getRepo(){
-	return @$_GET['repo'];
+    return @$_GET['repo'];
 }
 
 function getPage(){
-	return @$_GET['page'];
+    return @$_GET['page'];
 }
 
 function getMax(){
@@ -175,16 +175,16 @@ function getPageNb(){
 }
 
 function getRev($null = false){
-	$rev = @$_GET['rev'];
-	if($rev && $rev!="HEAD"){
-		return $rev;
-	}else{
-		if($null==true){
-			return null;
-		}else{
-			return 'HEAD';
-		}
-	}
+    $rev = @$_GET['rev'];
+    if($rev && $rev!="HEAD"){
+        return $rev;
+    }else{
+        if($null==true){
+            return null;
+        }else{
+            return 'HEAD';
+        }
+    }
 }
 
 function getRev2($null = false,$same=false){
@@ -192,15 +192,15 @@ function getRev2($null = false,$same=false){
     if($same===true){
         $rev = @$_GET['rev'];
     }
-	if($rev && $rev!="HEAD"){
-		return $rev;
-	}else{
-		if($null==true){
-			return null;
-		}else{
-			return 'HEAD';
-		}
-	}
+    if($rev && $rev!="HEAD"){
+        return $rev;
+    }else{
+        if($null==true){
+            return null;
+        }else{
+            return 'HEAD';
+        }
+    }
 }
 
 function getCallingFunction() {
@@ -219,19 +219,19 @@ function getCallingFunction() {
 function getCommand($command,$errors=1) {
     global $errors;
     global $allCommands;
-	//echo get_calling_function().": <code>".$command."</code><br>";
-	exec($command." 2>&1", $outputAndErrors, $return_var);
+    //echo get_calling_function().": <code>".$command."</code><br>";
+    exec($command." 2>&1", $outputAndErrors, $return_var);
     $i = (count($allCommands)+1);
     $allCommands[$i]['initiator'] = getCallingFunction();
     $allCommands[$i]['command'] = $command;
-	//echo $command."<br>";
-	if($return_var){
+    //echo $command."<br>";
+    if($return_var){
        /* <div class="alert alert-danger" role="alert"><?php echo ltrim(strip_tags(implode("<br>", array_filter($outputAndErrors)),"<br>"),"<br><br>") ?></div> */
-		?>
-		<?php
-		$errors[] = implode("<br>", $outputAndErrors);
-	}
-	return $outputAndErrors;
+        ?>
+        <?php
+        $errors[] = implode("<br>", $outputAndErrors);
+    }
+    return $outputAndErrors;
 }
 
 function getAllCommands(){
@@ -244,90 +244,90 @@ function getThemeRoot(){
 }
 
 function getFilesList(){
-	$files = array();
-	$files_dir = getDirList();
+    $files = array();
+    $files_dir = getDirList();
 
-	foreach ($files_dir as $key => $value) {
-		if(isFile($value)){
-			$files[$key] = $value;
-		}
-	}
-	return $files;
+    foreach ($files_dir as $key => $value) {
+        if(isFile($value)){
+            $files[$key] = $value;
+        }
+    }
+    return $files;
 }
 
 function getFoldersList(){
-	$folders = array();
-	$files_dir = getDirList();
+    $folders = array();
+    $files_dir = getDirList();
 
-	foreach ($files_dir as $key => $value) {
-		if(isDir($value)){
-			$folders[$key] = $value;
-		}
-	}
-	return $folders;
+    foreach ($files_dir as $key => $value) {
+        if(isDir($value)){
+            $folders[$key] = $value;
+        }
+    }
+    return $folders;
 }
 
 function getSeparatedDirList(){
-	return array_merge(getFoldersList(),getFilesList());
+    return array_merge(getFoldersList(),getFilesList());
 }
 
 function getDirList($path= null){
-	$return = array();
-	if($path==""){
-		$path = getPath();
-	}
-	$files = getCommand('svn -r '.getRev().' ls --xml  '.getRepoUrl().'/'.$path);
+    $return = array();
+    if($path==""){
+        $path = getPath();
+    }
+    $files = getCommand('svn -r '.getRev().' ls --xml  '.getRepoUrl().'/'.$path);
 
-	$domObj = new xmlToArrayParser(implode("\n", $files)); 
-	$domArr = $domObj->array;
+    $domObj = new xmlToArrayParser(implode("\n", $files)); 
+    $domArr = $domObj->array;
 
-	$list = $domArr['lists']['list']['entry'];
+    $list = $domArr['lists']['list']['entry'];
 
-	if(!isset($list[0])){
-		$return[0] = $list;
-	}else {
-		$return = $list;
-	}
+    if(!isset($list[0])){
+        $return[0] = $list;
+    }else {
+        $return = $list;
+    }
 
-	//print_r($list);
-	return $return;
+    //print_r($list);
+    return $return;
 }
 
 function getLang(){
-	$lang = @$_GET['lang'];
-	if($lang){
-		return $lang;
-	}else{
-		if(get('Lang')){
-			return get('Lang');
-		}else{
-			return 'fr_FR';
-		}
-	}
+    $lang = @$_GET['lang'];
+    if($lang){
+        return $lang;
+    }else{
+        if(get('Lang')){
+            return get('Lang');
+        }else{
+            return 'fr_FR';
+        }
+    }
 }
 
 function getLangArray(){
-	include 'languages/'.getLang().'.php';
-	return $lang;
+    include 'languages/'.getLang().'.php';
+    return $lang;
 }
 
 function getTrad($strSlug){
-	$lang = getLangArray();
-	if(isset($lang[$strSlug])){
-		return $lang[$strSlug];
-	}else {
-		return "## ".$strSlug." ##";
-	}
+    $lang = getLangArray();
+    if(isset($lang[$strSlug])){
+        return $lang[$strSlug];
+    }else {
+        return "## ".$strSlug." ##";
+    }
 }
 
 function t($strSlug = "",$replace = array()){
-	$trad = getTrad($strSlug);
+    $trad = getTrad($strSlug);
 
-	foreach ($replace as $key => $value) {
-		$trad = str_replace("%".$key."%", $value, $trad);
-	}
+    foreach ($replace as $key => $value) {
+        $trad = str_replace("%".$key."%", $value, $trad);
+    }
 
-	return $trad;
+    return $trad;
 }
 
 function getThemesList(){
@@ -346,40 +346,40 @@ function getThemesList(){
 }
 
 function getOrderedDirList(){
-	$list = getDirList();
-	$files = array();
-	$folders = array();
-	foreach ($list as $key => $value) {
-		if($value['attrib']['kind']=="dir"){
-			$folders[]=$value;
-		}else{
-			$files[]=$value;
-		}
-	}
-	return array_merge($folders,$files);
+    $list = getDirList();
+    $files = array();
+    $folders = array();
+    foreach ($list as $key => $value) {
+        if($value['attrib']['kind']=="dir"){
+            $folders[]=$value;
+        }else{
+            $files[]=$value;
+        }
+    }
+    return array_merge($folders,$files);
 }
 
 function getLangList(){
     require __DIR__.'/IsoToLanguage.php';
-	$languages = array_diff(scandir(__DIR__."/languages/"), array('..', '.'));
+    $languages = array_diff(scandir(__DIR__."/languages/"), array('..', '.'));
     $return = array();
 
-	foreach ($languages as $key => $value) {
-		$languages[$key] = basename($value, '.php');
-		if(strlen($languages[$key])>2){
-			unset($languages[$key]);
-		}
-	}
+    foreach ($languages as $key => $value) {
+        $languages[$key] = basename($value, '.php');
+        if(strlen($languages[$key])>2){
+            unset($languages[$key]);
+        }
+    }
 
     foreach ($languages as $key => $iso_f) {
         $return[$iso_f] = $iso[$iso_f];
     }
 
-	return $return;
+    return $return;
 }
 
 function getHumanSize($bytes) {
-	$bytes = intval($bytes);
+    $bytes = intval($bytes);
     if(!empty($bytes)) {
         $s = array('bytes', 'kb', 'MB', 'GB', 'TB', 'PB');
         $e = floor(log($bytes)/log(1024));
@@ -469,133 +469,133 @@ function dateDiff($time1, $time2, $precision = 6) {
 
 
 function getDiff(){
-	$diff =  getCommand('svn -r '.getRev().':'.getRev2().' diff '.getRepoUrl().'/'.getPath());
-	return $diff;
+    $diff =  getCommand('svn -r '.getRev().':'.getRev2().' diff '.getRepoUrl().'/'.getPath());
+    return $diff;
 }
 
 function getLog($rev2=null){
-	$rev = getRev();
-	if($rev2){
-		$rev = getRev2();
-	}
-	$log =  getCommand('svn -r '.$rev.' log --xml '.getRepoUrl().'/');
-	return $log;
+    $rev = getRev();
+    if($rev2){
+        $rev = getRev2();
+    }
+    $log =  getCommand('svn -r '.$rev.' log --xml '.getRepoUrl().'/');
+    return $log;
 }
 
 function getLogDiff(){
-	$return = array();
+    $return = array();
 
-	$log =  getCommand('svn -r '.getRev().':'.getRev2().' log --xml '.getRepoUrl().'/'.getPath().' -v');
+    $log =  getCommand('svn -r '.getRev().':'.getRev2().' log --xml '.getRepoUrl().'/'.getPath().' -v');
 
-	$domObj = new xmlToArrayParser(implode("\n", $log)); 
-	$domArr = $domObj->array;
+    $domObj = new xmlToArrayParser(implode("\n", $log)); 
+    $domArr = $domObj->array;
 
-	if(isset($domArr['log']['logentry'])){
-		$logentry = $domArr['log']['logentry'];
+    if(isset($domArr['log']['logentry'])){
+        $logentry = $domArr['log']['logentry'];
 
-		if(!isset($logentry[0])){
-			$return[0] = $logentry;
-		}else {
-			$return = $logentry;
-		}
+        if(!isset($logentry[0])){
+            $return[0] = $logentry;
+        }else {
+            $return = $logentry;
+        }
 
-		foreach ($return as $key => $value) {
-			if(!isset($return[$key]['paths']['path'][0])){
-				$path = $return[$key]['paths']['path'];
-				unset($return[$key]['paths']['path']);
-				$return[$key]['paths']['path'][0] = $path;
-			}
-		}
-	}else{
-		$return = array();
-	}
+        foreach ($return as $key => $value) {
+            if(!isset($return[$key]['paths']['path'][0])){
+                $path = $return[$key]['paths']['path'];
+                unset($return[$key]['paths']['path']);
+                $return[$key]['paths']['path'][0] = $path;
+            }
+        }
+    }else{
+        $return = array();
+    }
 
-	return $return;
+    return $return;
 }
 
 function getRepoUrl(){
-	$protocol = get('Protocol',true);
-	$url = get('Url',true);
-	$root = get('RootPath',true);
+    $protocol = get('Protocol',true);
+    $url = get('Url',true);
+    $root = get('RootPath',true);
     if($protocol!="file://"){
         $username = get('RepoUsername',true);
         $password = get('RepoPassword',true);   
     }
 
-	//$fullUrl = "--username ".$username." --password ".$password." ".$protocol.$url.$root."/".getRepo();
+    //$fullUrl = "--username ".$username." --password ".$password." ".$protocol.$url.$root."/".getRepo();
 
-	$fullUrl = "";
-	if(!empty($username)){
-		$fullUrl .= "--username ".$username;
-		if(!empty($password)){
-			$fullUrl .= " --password ".$password;
-		}
-	}
-	$fullUrl .= " ".$protocol.$url."/".$root;
+    $fullUrl = "";
+    if(!empty($username)){
+        $fullUrl .= "--username ".$username;
+        if(!empty($password)){
+            $fullUrl .= " --password ".$password;
+        }
+    }
+    $fullUrl .= " ".$protocol.$url."/".$root;
 
-	//$fullUrl = $protocol.$url.$root;
+    //$fullUrl = $protocol.$url.$root;
 
-	// $fullUrl = $protocol;
-	// if(!empty($username)){
-	// 	$fullUrl.=$username;
-	// 	if(!empty($password)){
-	// 		$fullUrl.=':'.$password;
-	// 	}
-	// 	$fullUrl.="@";
-	// }
-	// $fullUrl.=$url.$root."/".getRepo();
+    // $fullUrl = $protocol;
+    // if(!empty($username)){
+    //  $fullUrl.=$username;
+    //  if(!empty($password)){
+    //      $fullUrl.=':'.$password;
+    //  }
+    //  $fullUrl.="@";
+    // }
+    // $fullUrl.=$url.$root."/".getRepo();
 
-	//echo $fullUrl;
-	return $fullUrl;
+    //echo $fullUrl;
+    return $fullUrl;
 }
 
 function getRepoPath(){
-	return get('Url',true)."/".getRepo();
+    return get('Url',true)."/".getRepo();
 }
 
 function getReposForParent($url){
-	$parentLs = getCommand('ls '.$url);
-	return $parentLs;
+    $parentLs = getCommand('ls '.$url);
+    return $parentLs;
 }
 
 function getOrderedReposConfig(){
-	global $config;
-	$return = array();
+    global $config;
+    $return = array();
 
-	foreach ($config['repos'] as $key => $value) {
-		if(isset($return[$key])){
-			array_push($return[$key], $value);
-		}else{
-			$return[$key]=$value;
-		}
-	}
+    foreach ($config['repos'] as $key => $value) {
+        if(isset($return[$key])){
+            array_push($return[$key], $value);
+        }else{
+            $return[$key]=$value;
+        }
+    }
 return $return;
 }
 
 function getFullReposConfig(){
-	$config = getOrderedReposConfig();
+    $config = getOrderedReposConfig();
 
-	foreach ($config as $key => $value) {
-		if($value['IsParent']==true){
-			foreach (getReposForParent($value['Url']) as $key2 => $value2) {
-				$return[$value2]['IsParent'] = $value['IsParent'];
-				$return[$value2]['Protocol'] = $value['Protocol'];
-				$return[$value2]['Url'] = $value['Url'];
-				$return[$value2]['RootPath'] = $value2;
-				$return[$value2]['RepoUsername'] = $value['RepoUsername'];
-				$return[$value2]['RepoPassword'] = $value['RepoPassword'];
-			}
-		}else{
+    foreach ($config as $key => $value) {
+        if($value['IsParent']==true){
+            foreach (getReposForParent($value['Url']) as $key2 => $value2) {
+                $return[$value2]['IsParent'] = $value['IsParent'];
+                $return[$value2]['Protocol'] = $value['Protocol'];
+                $return[$value2]['Url'] = $value['Url'];
+                $return[$value2]['RootPath'] = $value2;
+                $return[$value2]['RepoUsername'] = $value['RepoUsername'];
+                $return[$value2]['RepoPassword'] = $value['RepoPassword'];
+            }
+        }else{
             if(is_int($key)){
                 $return[$value['RootPath']] = $value;
             }else{              
                 $return[$key] = $value;
            }
-		}
-	}
+        }
+    }
 
-	//$return = array_values($return);
-	return $return;
+    //$return = array_values($return);
+    return $return;
 }
 
 function printR($return){
@@ -605,56 +605,56 @@ function printR($return){
 }
 
 function getReposList(){
-	$config = getFullReposConfig();
-	$return = array();
-	
-	foreach ($config as $key => $value) {
-		$return[$key] = $value['RootPath'];
-	}
+    $config = getFullReposConfig();
+    $return = array();
+    
+    foreach ($config as $key => $value) {
+        $return[$key] = $value['RootPath'];
+    }
     asort($return);
-	return $return;
+    return $return;
 }
 
 function get($param,$repo=false,$repoName=null){
 
-	if($repo==true){
-		$config = getFullReposConfig();
+    if($repo==true){
+        $config = getFullReposConfig();
 
-		if($repoName==null){
-			$repoName = getRepo();
-		}
+        if($repoName==null){
+            $repoName = getRepo();
+        }
 
-		foreach ($config as $key => $value) {
-			if($value['RootPath']==$repoName){
-				if(isset( $config[$key][$param] ) ){
-					return $config[$key][$param];
-				}else{
-					return "error 1";
-				}
-			}
-		}
+        foreach ($config as $key => $value) {
+            if($value['RootPath']==$repoName){
+                if(isset( $config[$key][$param] ) ){
+                    return $config[$key][$param];
+                }else{
+                    return "error 1";
+                }
+            }
+        }
 
-	}else{
-		global $config;
-		if(isset($config[$param])){
-			return $config[$param];
-		}else{
-			return "error 2";
-		}
-	}
+    }else{
+        global $config;
+        if(isset($config[$param])){
+            return $config[$param];
+        }else{
+            return "error 2";
+        }
+    }
 
 }
 
 function getInfos($path = null, $rev = true){
-	if($path===null){
-		$path = getPath();
-	}
-	if($rev==true){
-		$log =  getCommand('svn -r'.getRev().' info --xml '.getRepoUrl().'/'.$path);
-	}else{
-		$log =  getCommand('svn info --xml '.getRepoUrl().'/'.$path);
-	}
-	return $log;
+    if($path===null){
+        $path = getPath();
+    }
+    if($rev==true){
+        $log =  getCommand('svn -r'.getRev().' info --xml '.getRepoUrl().'/'.$path);
+    }else{
+        $log =  getCommand('svn info --xml '.getRepoUrl().'/'.$path);
+    }
+    return $log;
 }
 
 function getLastRev(){
@@ -683,10 +683,10 @@ function getPropList(){
 }
 
 function getCommitMsg($rev2=null){
-	$log = getLog($rev2);
+    $log = getLog($rev2);
 
-	$domObj = new xmlToArrayParser(implode("\n", $log)); 
-	$domArr = $domObj->array;
+    $domObj = new xmlToArrayParser(implode("\n", $log)); 
+    $domArr = $domObj->array;
     if(isset($domArr['log']['logentry']['msg'])){
         return nl2br($domArr['log']['logentry']['msg']);
     }else{
@@ -695,10 +695,10 @@ function getCommitMsg($rev2=null){
 }
 
 function getCommitAuthor($rev2=null){
-	$log = getLog($rev2);
+    $log = getLog($rev2);
 
-	$domObj = new xmlToArrayParser(implode("\n", $log)); 
-	$domArr = $domObj->array;
+    $domObj = new xmlToArrayParser(implode("\n", $log)); 
+    $domArr = $domObj->array;
     if(isset($domArr['log']['logentry']['author'])){
         return $domArr['log']['logentry']['author'];
     }else{
@@ -707,10 +707,10 @@ function getCommitAuthor($rev2=null){
 }
 
 function getCommitDate($rev2=null,$force=false){
-	$log = getLog($rev2);
+    $log = getLog($rev2);
 
-	$domObj = new xmlToArrayParser(implode("\n", $log)); 
-	$domArr = $domObj->array;
+    $domObj = new xmlToArrayParser(implode("\n", $log)); 
+    $domArr = $domObj->array;
 
     if(isset($domArr['log']['logentry']['date'])){
         return getHumanDate($domArr['log']['logentry']['date'],$force);
@@ -733,6 +733,11 @@ function download($path=""){
         $TmpCurrentDir = "";
     }
 
+    if(!file_exists(get('TmpPath'))){
+        echo 'TmpPath does not exist';
+        exit;
+    }
+
     $dirPath = get('TmpPath').'/'.$TmpUid.'/';
     if(!file_exists($dirPath)){
         mkdir($dirPath, 0777);
@@ -753,15 +758,15 @@ function download($path=""){
             case 'file':
                 $old_path = $_GET['path'];
                 if(basename(getPath())==$value['name']){
-                    $_GET['path']= getPath().$TmpCurrentDir;
+                    setPath(getPath().$TmpCurrentDir);
                 }else{
-                    $_GET['path']= getPath().$TmpCurrentDir."/".$value['name'];
+                    setPath(getPath().$TmpCurrentDir."/".$value['name']);
                 }
                 $file_content = getFile(true);
                 if(!empty($file_content)){
                     file_put_contents($dirPath.ltrim($TmpCurrentDir,'/').'/'.$value['name'], $file_content);
                 }
-                $_GET['path'] = $old_path;
+                revertPath();
                 break;
             
             default:
@@ -771,7 +776,7 @@ function download($path=""){
     }
 
     Zip($dirPath, get('TmpPath').'/'.$TmpUid.'.zip');
-    rrmdir($dirPath);
+    //rrmdir($dirPath);
 
     return $TmpUid;
 
@@ -852,15 +857,15 @@ function Zip($source, $destination)
 
 
 function getFile($base64=false){
-	if($base64===true){
-		$file = getCommand('svn cat -r'.getRev().' '.getRepoUrl().'/'.getPath().' | base64');
-		$file = base64_decode(implode("\n", $file));
-	}else{
-		$file = getCommand('svn cat -r'.getRev().' '.getRepoUrl().'/'.getPath());
-		$file = implode("\n", $file);
-	}
-	
-	return $file;
+    if($base64===true){
+        $file = getCommand('svn cat -r'.getRev().' '.getRepoUrl().'/'.getPath().' | base64');
+        $file = base64_decode(implode("\n", $file));
+    }else{
+        $file = getCommand('svn cat -r'.getRev().' '.getRepoUrl().'/'.getPath());
+        $file = implode("\n", $file);
+    }
+    
+    return $file;
 }
 
 function requireAuth(){
@@ -1132,6 +1137,19 @@ function revertRev(){
     global $TmpRev;
     $_GET['rev']=$TmpRev;
 }
+
+
+function setPath($path=""){
+    global $TmpPath;
+    $TmpPath = getPath();
+    $_GET['path']=$path;
+}
+
+function revertPath(){
+    global $TmpPath;
+    $_GET['path']=$TmpPath;
+}
+
 
 ?>
 
